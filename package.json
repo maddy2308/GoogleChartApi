@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/maddy2308/GoogleChartApi#readme",
   "dependencies": {
+    "angular-gridster": "^0.13.3",
     "bootstrap": "^3.3.5",
     "express": "^4.13.3",
     "jquery": "^2.1.4",
