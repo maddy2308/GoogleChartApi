@@ -1,0 +1,30 @@
+{
+  "name": "amazon_dashboard",
+  "version": "1.0.0",
+  "description": "The POC is for showing the ASIN data collected from Amazon",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maddy2308/GoogleChartApi.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "NodeJS",
+    "GoogleCharts"
+  ],
+  "author": "maddy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maddy2308/GoogleChartApi/issues"
+  },
+  "homepage": "https://github.com/maddy2308/GoogleChartApi#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "express": "^4.13.3",
+    "jquery": "^2.1.4",
+    "node": "0.0.0"
+  }
+}

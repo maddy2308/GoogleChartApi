@@ -1,18 +1,41 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" ‰>
+    <script src="../node_modules/angular/angular.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src="JS/AnnotationChart.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.0/angular-material.min.js"></script>
+
+
+    <script>
+        "use strict";
+
+        /*We need to manually start angular as we need to
+         wait for the google charting libs to be ready*/
+        google.setOnLoadCallback(function () {
+            angular.bootstrap(document.body, ['AmazonDashboard']);
+        });
+        google.load('visualization', '1.0', {packages: ['controls']});
+    </script>
+    <!--<script src="js/ngGoogleCharts.js" type="text/javascript"></script>-->
+    <script src="js/AmazonDashboard.module.js"></script>
+    <script src="js/AmazonDashboardController.js"></script>
+    <script src="js/AmazonChartService.js"></script>
+
+
 
 </head>
-<body>
+<body ng-controller="AmazonDashboardController as amazonCtrl">
 
-<button class="btn btn-primary"
-        onclick="annotationChart.annotationChart()">Annotation Chart</button>
-<!--Div that will hold the chart-->
-<div id="chart_div"></div>
+
+
+<button ng-click="amazonCtrl.showColumnChart()">Show Column Chart</button>
+<div id="dashboard_div">
+    <div id="filter_div" style="width: 500px"></div>
+    <div id="chart_div"></div>
+</div>
 </body>
 </html>
