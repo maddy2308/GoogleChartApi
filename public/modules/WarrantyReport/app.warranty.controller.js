@@ -15,7 +15,7 @@
 
         vm.showGeoChart = showGeoChart;
         vm.showTableChart = showTableChart;
-        //vm.showPieChart = showPieChart;
+        vm.showPieChart = showPieChart;
         //vm.increaseHighValue = increaseHighValue;
 
         init();
@@ -23,7 +23,6 @@
         function init() {
             warrantyService.readClaimsData().then(function (response) {
                 vm.warrantyData = response;
-                //showGeographyChart();
             });
         }
 
@@ -40,12 +39,11 @@
                     stateCodeData[key] = 1;
                 }
             });
-             _.mapObject(stateCodeData, function(val, key){
-                var array = [];
-                array.push(key, val);
-                dataForChartTable.push(array);
-            }
-
+            _.mapObject(stateCodeData, function (val, key) {
+                    var array = [];
+                    array.push(key, val);
+                    dataForChartTable.push(array);
+                }
             );
             var data = google.visualization.arrayToDataTable(dataForChartTable);
             var geochart = new google.visualization.GeoChart(document.getElementById('chart_div'));
@@ -56,29 +54,52 @@
             var queryString = encodeURIComponent('select A, B, C, D');
             var query = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/12gAbshVc9j1cO9YyGDxJVDX-X-ExrLQFovA4LJQFAAY/gviz/tq?gid=0&headers=1&tq=' + queryString);
-            query.send(handleQueryResponse);
+            query.send(function (response) {
+                if (response instanceof Error) {
+                    console.log(response);
+                    return;
+                }
+                vm.dataTable = response.getDataTable();
+                drawChart();
+            });
         }
 
-        var handleQueryResponse = function(response) {
-            if (response instanceof Error) {
-                console.log(response);
-                return;
-            }
-            vm.dataTable = response.getDataTable();
-            drawChart();
+        function showPieChart() {
+            var queryString = encodeURIComponent('select C, sum(B) group by C offset 4');
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1AUkFOz3s_K0hNUzjIRoB0sGKTDEVnf5aVN3-tMmkiaM/gviz/tq?gid=0&headers=1&tq=' + queryString);
+            query.send(function (response) {
+                if (response instanceof Error) {
+                    console.log(response);
+                    return;
+                }
+                var result = response.getDataTable();
+                var pieChart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                pieChart.draw(result, {height: 400, width: 1000});
+            });
+        }
 
-        };
 
-        var drawChart = function (){
+        var drawChart = function () {
             var result = google.visualization.data.group(
                 vm.dataTable,
                 [0, 2],
-                [{'column': 0, 'aggregation': google.visualization.data.count, 'type': 'number', 'label': '# of Warranties' },
-                    {'column': 2, 'aggregation': google.visualization.data.count, 'type': 'number', 'label': '# of SKU_Class'}]
+                [{
+                    'column': 0,
+                    'aggregation': google.visualization.data.count,
+                    'type': 'number',
+                    'label': '# of Warranties'
+                },
+                    {
+                        'column': 2,
+                        'aggregation': google.visualization.data.count,
+                        'type': 'number',
+                        'label': '# of SKU_Class'
+                    }]
             );
 
             var chart = new google.visualization.Table(document.getElementById('chart_div'));
-            chart.draw(result, { height: 400, width: 1000 });
+            chart.draw(result, {height: 400, width: 1000});
         }
     }
 })();
