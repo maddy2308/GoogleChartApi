@@ -22,9 +22,12 @@
   },
   "homepage": "https://github.com/maddy2308/GoogleChartApi#readme",
   "dependencies": {
+    "angular": "^1.4.6",
     "angular-gridster": "^0.13.3",
     "bootstrap": "^3.3.5",
+    "cors": "^2.7.1",
     "express": "^4.13.3",
+    "file-url": "^1.0.1",
     "jquery": "^2.1.4",
     "node": "0.0.0"
   }

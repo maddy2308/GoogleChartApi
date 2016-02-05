@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="../node_modules/angular-gridster/dist/angular-gridster.min.css"/>
     <script src="../node_modules/angular-gridster/dist/angular-gridster.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
+    <script src="../node_modules/underscore/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-route.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js"></script>
@@ -23,14 +24,20 @@
         /*We need to manually start angular as we need to
          wait for the google charting libs to be ready*/
         google.setOnLoadCallback(function () {
-            angular.bootstrap(document.body, ['AmazonDashboard']);
+            angular.bootstrap(document.body, ['DashboardPoc']);
         });
-        google.load('visualization', '1.0', {packages: ['corechart', 'controls']});
+        google.load('visualization', '1.0', {packages: ['corechart', 'controls', 'geochart', 'table']});
     </script>
-    <!--<script src="js/ngGoogleCharts.js" type="text/javascript"></script>-->
-    <script src="js/AmazonDashboard.module.js"></script>
-    <script src="js/AmazonDashboardController.js"></script>
-    <script src="js/AmazonChartService.js"></script>
+
+
+    <script src="modules/app.dashboard.poc.js"></script>
+
+    <script src="modules/AmazonReport/AmazonDashboardController.js"></script>
+    <script src="modules/AmazonReport/AmazonChartService.js"></script>
+
+
+    <script src="modules/WarrantyReport/app.warranty.controller.js"></script>
+    <script src="modules/WarrantyReport/app.warranty.service.js"></script>
 
 
 </head>
@@ -38,38 +45,26 @@
 
 <ng-include src="'menu.html'"></ng-include>
 
-<div style="height: 100%" ng-controller="AmazonDashboardController as amazonCtrl" layout="row">
+<div style="height: 100%" layout="row">
 
-    <section layout="row" flex="33">
+    <section layout="row" flex="20">
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open='true'>
             <md-toolbar class="md-theme-indigo">
-                <h1 class="md-toolbar-tools">DashBoardControls</h1>
+                <h3 class="md-toolbar-tools">DashBoardControls</h3>
             </md-toolbar>
             <md-content layout-padding>
-
-                <md-button class="md-primary" ng-click="amazonCtrl.showSummary()">
-                    Show Summary
+                <md-button class="md-accent" ng-href="#/amazon-dasboard">
+                    Amazon Dashboard
                 </md-button>
-
-                <md-button class="md-primary" ng-click="amazonCtrl.showColumnChart()">
-                    Compare Amazon Asins
+                <md-button class="md-accent" ng-href="#/warranty-dasboard">
+                    Warranty Dashboard
                 </md-button>
-
-                <md-button class="md-primary" ng-click="amazonCtrl.showPieChart()">
-                    Show Winning Percentage
-                </md-button>
-
             </md-content>
+
         </md-sidenav>
     </section>
 
-    <div>
-        <div id="dashboard_div" flex layout="column" ng-hide="amazonCtrl.dashboard!='columnChartDashboard'">
-            <div id="chart_div"></div>
-            <div id="filter_div" layout-align="center center"></div>
-        </div>
-        <div id="piechart_3d" flex ng-hide="amazonCtrl.dashboard!='pieChartDashboard'"></div>
-    </div>
+    <div ng-view></div>
 </div>
 </body>
 </html>

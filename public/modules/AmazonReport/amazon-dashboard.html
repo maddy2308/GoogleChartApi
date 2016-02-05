@@ -1,0 +1,15 @@
+<div>
+    <md-content layout-padding>
+        <md-button class="md-primary" ng-click="amazonCtrl.showColumnChart()">
+            Compare Amazon Asins
+        </md-button>
+        <md-button class="md-primary" ng-click="amazonCtrl.showPieChart()">
+            Show Winning Percentage
+        </md-button>
+    </md-content>
+    <div id="amazon_dashboard_div" flex layout="column" ng-hide="amazonCtrl.dashboard!='columnChartDashboard'">
+        <div id="amazon_chart_div"></div>
+        <div id="amazon_filter_div" layout-align="center center"></div>
+    </div>
+    <div id="amazon_piechart_3d" flex ng-hide="amazonCtrl.dashboard!='pieChartDashboard'"></div>
+</div>

@@ -1,5 +1,5 @@
 (function () {
-  angular.module("AmazonDashboard").controller("AmazonDashboardController", AmazonDashboardController);
+  angular.module("DashboardPoc").controller("AmazonDashboardController", AmazonDashboardController);
 
   AmazonDashboardController.$inject = ['AmazonChartService'];
 
@@ -53,10 +53,10 @@
     function createColumnChartDashBoard() {
       var response = vm.amazonAsinData;
       var dt = createDataSourceForChart(response);
-      var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
+      var dashboard = new google.visualization.Dashboard(document.getElementById('amazon_dashboard_div'));
       var filterBattleGroup = new google.visualization.ControlWrapper({
         'controlType': 'NumberRangeFilter',
-        'containerId': 'filter_div',
+        'containerId': 'amazon_filter_div',
         'options': {
           'filterColumnLabel': 'BattleGroup #'
         },
@@ -67,7 +67,7 @@
         height: 400,
         width: 800,
         title: 'Comparison of Amazon Prices with Square Trade Competitors',
-        isStacked: 'percent',
+        isStacked: true,
         hAxis: {
           title: 'Battle Group #',
           format: 'decimal'
@@ -84,7 +84,7 @@
 
       var stackChart = new google.visualization.ChartWrapper({
         'chartType': 'ColumnChart',
-        'containerId': 'chart_div',
+        'containerId': 'amazon_chart_div',
         'options': options
       });
 
@@ -105,12 +105,12 @@
         width: 600,
         height: 600,
         legend: {
-          position: 'right',
+          position: 'right'
         },
         is3D: true
       };
 
-      var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+      var chart = new google.visualization.PieChart(document.getElementById('amazon_piechart_3d'));
       chart.draw(google.visualization.arrayToDataTable(data), options);
     }
 

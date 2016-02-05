@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module("AmazonDashboard").factory("AmazonChartService", AmazonChartService);
+  angular.module("DashboardPoc").factory("AmazonChartService", AmazonChartService);
 
   AmazonChartService.$inject = ['$http'];
 
